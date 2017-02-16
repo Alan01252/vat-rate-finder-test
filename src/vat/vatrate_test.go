@@ -35,8 +35,6 @@ func (jsonFetcher *MockJsonFetcher) GetJson() (foundJson []interface{}, err erro
 
 func TestVatRate_GetVatRate(t *testing.T) {
 
-	const shortForm = "2006-01-02"
-
 	jsonFetcher := &MockJsonFetcher{}
 	v := VatRateFinder{}
 
