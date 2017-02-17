@@ -8,14 +8,14 @@ import (
 )
 
 type JsonFetcher interface {
-	GetJson() (foundJson []interface{}, err error)
+	GetJson() (foundJson VatRateStruct, err error)
 }
 
 type UrlJsonFetcher struct {
 	url string
 }
 
-func (jsonFetcher *UrlJsonFetcher) GetJson() (foundJson []interface{}, err error) {
+func (jsonFetcher *UrlJsonFetcher) GetJson() (foundJson VatRateStruct, err error) {
 	response, _ := http.Get(jsonFetcher.url)
 	defer response.Body.Close()
 

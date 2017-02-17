@@ -28,7 +28,7 @@ type MockJsonFetcher struct {
 	url string
 }
 
-func (jsonFetcher *MockJsonFetcher) GetJson() (foundJson []interface{}, err error) {
+func (jsonFetcher *MockJsonFetcher) GetJson() (foundJson VatRateStruct, err error) {
 	json.Unmarshal([]byte(testJson), &foundJson)
 	return foundJson, nil
 }
@@ -40,7 +40,7 @@ func TestVatRate_GetVatRate(t *testing.T) {
 
 	var dateTests = []struct {
 		date     string // input
-		expected float64    // expected result
+		expected int    // expected result
 	}{
 		{"2016-01-01", -1},
 		{"2017-01-01", 20},

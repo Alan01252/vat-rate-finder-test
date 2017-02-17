@@ -7,6 +7,15 @@ import (
 
 const shortForm = "2006-01-02 15:04:05"
 
+type VatRateStruct []struct {
+	StartDate string `json:"startDate"`
+	EndDate string `json:"endDate"`
+	VatRate struct {
+		Standard int `json:"standard"`
+		Reduced float64 `json:"reduced"`
+	} `json:"vatRate"`
+}
+
 type VatRateFinder struct {
 	jsonFetcher JsonFetcher
 }
@@ -16,27 +25,26 @@ func NewVatRateFinder() *VatRateFinder {
 	return &vatRateFinder
 }
 
-func findVatRateInJson(json []interface{}, parsedDate time.Time) (foundVatRate float64) {
+func findVatRateInJson(vatRate VatRateStruct, parsedDate time.Time) (foundVatRate int) {
 
 	foundVatRate = -1
 
-	for _, v := range json {
+	for _, v := range vatRate {
 
-		vatRate := v.(map[string]interface{})
 		// Assuming that the time in VAT json is always correct
-		startDate, _ := time.Parse(shortForm, vatRate["startDate"].(string))
-		endDate, _ := time.Parse(shortForm, vatRate["endDate"].(string))
+		startDate, _ := time.Parse(shortForm, v.StartDate)
+		endDate, _ := time.Parse(shortForm, v.EndDate)
 
 		if parsedDate.Unix() >= startDate.Unix() && parsedDate.Unix() <= endDate.Unix() {
-			vatDetails := vatRate["vatRate"].(map[string]interface{})
-			return vatDetails["standard"].(float64)
+			vatDetails := v.VatRate
+			return vatDetails.Standard
 		}
 	}
 
 	return foundVatRate
 }
 
-func (vatRateFinder *VatRateFinder) GetVatRate(jsonFetcher JsonFetcher, requestedDate string) (foundVatRate float64, err error) {
+func (vatRateFinder *VatRateFinder) GetVatRate(jsonFetcher JsonFetcher, requestedDate string) (foundVatRate int, err error) {
 
 	foundVatRate = -1
 	parsedDate, err := time.Parse(shortForm, requestedDate+" 00:00:00")
