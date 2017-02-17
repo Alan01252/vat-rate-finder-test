@@ -40,7 +40,7 @@ func TestVatRate_GetVatRate(t *testing.T) {
 
 	var dateTests = []struct {
 		date     string // input
-		expected int    // expected result
+		expected float64    // expected result
 	}{
 		{"2016-01-01", -1},
 		{"2017-01-01", 20},
@@ -55,7 +55,7 @@ func TestVatRate_GetVatRate(t *testing.T) {
 
 	for _, tt := range dateTests {
 		foundVat, _ := v.GetVatRate(jsonFetcher, tt.date)
-		if foundVat != float64(tt.expected) {
+		if foundVat != tt.expected {
 			t.Error("Incorrect VAT rate for date", tt.date, "found expected", tt.expected, "got", foundVat)
 		}
 	}
