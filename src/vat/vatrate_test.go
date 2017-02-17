@@ -28,9 +28,9 @@ type MockJsonFetcher struct {
 	url string
 }
 
-func (jsonFetcher *MockJsonFetcher) GetJson() (foundJson VatRateStruct, err error) {
-	json.Unmarshal([]byte(testJson), &foundJson)
-	return foundJson, nil
+func (jsonFetcher *MockJsonFetcher) GetJson() (foundVatList VatRateStruct, err error) {
+	json.Unmarshal([]byte(testJson), &foundVatList)
+	return foundVatList, nil
 }
 
 func TestVatRate_GetVatRate(t *testing.T) {

@@ -25,11 +25,11 @@ func NewVatRateFinder() *VatRateFinder {
 	return &vatRateFinder
 }
 
-func findVatRateInJson(vatRate VatRateStruct, parsedDate time.Time) (foundVatRate int) {
+func findVatRateInJson(foundVatList VatRateStruct, parsedDate time.Time) (foundVatRate int) {
 
 	foundVatRate = -1
 
-	for _, v := range vatRate {
+	for _, v := range foundVatList {
 
 		// Assuming that the time in VAT json is always correct
 		startDate, _ := time.Parse(shortForm, v.StartDate)
@@ -53,12 +53,12 @@ func (vatRateFinder *VatRateFinder) GetVatRate(jsonFetcher JsonFetcher, requeste
 		return foundVatRate, err
 	}
 
-	foundJson, err := jsonFetcher.GetJson()
+	foundVatList, err := jsonFetcher.GetJson()
 	if err != nil {
 		return foundVatRate, err
 	}
 
-	foundVatRate = findVatRateInJson(foundJson, parsedDate)
+	foundVatRate = findVatRateInJson(foundVatList, parsedDate)
 	if foundVatRate == -1 {
 		return foundVatRate, errors.New("Could not find vat rate")
 	}
