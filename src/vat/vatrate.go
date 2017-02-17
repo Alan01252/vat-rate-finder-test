@@ -9,10 +9,10 @@ const shortForm = "2006-01-02 15:04:05"
 
 type VatRateStruct []struct {
 	StartDate string `json:"startDate"`
-	EndDate string `json:"endDate"`
-	VatRate struct {
-		Standard int `json:"standard"`
-		Reduced float64 `json:"reduced"`
+	EndDate   string `json:"endDate"`
+	VatRate   struct {
+		Standard int     `json:"standard"`
+		Reduced  float64 `json:"reduced"`
 	} `json:"vatRate"`
 }
 
