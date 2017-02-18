@@ -37,7 +37,7 @@ func TestJsonFetcher(t *testing.T) {
 
 var _ = Describe("JSON URL Fetcher", func() {
 
-	It("to return a VatRateStruct", func() {
+	It("to return a VatRateStruct when returing valid json", func() {
 
 		ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			w.Write([]byte(urlJson))
@@ -48,6 +48,19 @@ var _ = Describe("JSON URL Fetcher", func() {
 		aStruct, _ := jsonFetcher.GetJson()
 
 		Expect(reflect.TypeOf(aStruct).String()).To(Equal("vat.VatRateStruct"))
+
+	})
+
+	It("to return an error when returing invalid json", func() {
+		ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			w.Write([]byte("{invalidjson}"))
+		}))
+		defer ts.Close()
+
+		jsonFetcher := NewUrlJsonFetcher(ts.URL)
+		_, err := jsonFetcher.GetJson()
+
+		Expect(err).ToNot(BeNil())
 
 	})
 })
