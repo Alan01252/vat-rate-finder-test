@@ -41,7 +41,9 @@ func (jsonFetcher *MockJsonFetcher) GetJson() (foundVatList VatRateStruct, err e
 	return foundVatList, nil
 }
 
+
 var _ = Describe("VAT", func() {
+
 
 	It("Can return the VAT rate for a specific date", func() {
 
