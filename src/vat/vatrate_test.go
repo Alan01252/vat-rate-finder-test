@@ -2,6 +2,9 @@ package vat
 
 import (
 	"encoding/json"
+
+	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/gomega"
 	"testing"
 )
 
@@ -24,6 +27,11 @@ const testJson = `[
 }
 ]`
 
+func TestVat(t *testing.T) {
+	RegisterFailHandler(Fail)
+	RunSpecs(t, "VAT Test Suite")
+}
+
 type MockJsonFetcher struct {
 	url string
 }
@@ -33,28 +41,34 @@ func (jsonFetcher *MockJsonFetcher) GetJson() (foundVatList VatRateStruct, err e
 	return foundVatList, nil
 }
 
-func TestVatRate_GetVatRate(t *testing.T) {
+var _ = Describe("VAT", func() {
 
-	jsonFetcher := &MockJsonFetcher{}
-	v := VatRateFinder{}
+	It("Can return the VAT rate for a specific date", func() {
 
-	var dateTests = []struct {
-		date     string // input
-		expected int    // expected result
-	}{
-		{"2016-01-01", -1},
-		{"2017-01-01", 20},
-		{"2017-01-20", 20},
-		{"2017-01-31", 20},
-		{"2017-02-01", 20},
-		{"2017-02-03", 30},
-		{"2017-03-02", -1},
-	}
+		jsonFetcher := &MockJsonFetcher{}
+		v := VatRateFinder{}
 
-	for _, tt := range dateTests {
-		foundVat, _ := v.GetVatRate(jsonFetcher, tt.date)
-		if foundVat != tt.expected {
-			t.Error("Incorrect VAT rate for date", tt.date, "found expected", tt.expected, "got", foundVat)
+		var dateTests = []struct {
+			date     string // input
+			expected int    // expected result
+		}{
+			{"2016-01-01", -1},
+			{"2017-01-01", 20},
+			{"2017-01-20", 20},
+			{"2017-01-31", 20},
+			{"2017-02-01", 20},
+			{"2017-02-03", 30},
+			{"2017-03-02", -1},
 		}
-	}
-}
+
+
+		for _, tt := range dateTests {
+			foundVat, _ := v.GetVatRate(jsonFetcher, tt.date)
+			if foundVat != tt.expected {
+				Expect(foundVat).To(Equal(tt.expected))
+			}
+		}
+
+	})
+
+})
