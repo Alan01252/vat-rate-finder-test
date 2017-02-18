@@ -3,14 +3,26 @@ package vat
 import (
 	"errors"
 	"time"
+	log "github.com/Sirupsen/logrus"
+	"os"
 )
+
+var requestLogger *log.Entry
+
+func init() {
+	log.SetFormatter(&log.JSONFormatter{})
+	log.SetOutput(os.Stdout)
+	log.SetLevel(log.DebugLevel)
+	requestLogger = log.WithFields(log.Fields{"package": "vat"})
+
+}
 
 const shortForm = "2006-01-02 15:04:05"
 
 type VatRateStruct []struct {
 	StartDate string `json:"startDate"`
 	EndDate   string `json:"endDate"`
-	VatRate   struct {
+	VatRate struct {
 		Standard int     `json:"standard"`
 		Reduced  float64 `json:"reduced"`
 	} `json:"vatRate"`
@@ -46,6 +58,9 @@ func findVatRateInJson(foundVatList VatRateStruct, parsedDate time.Time) (foundV
 
 func (vatRateFinder *VatRateFinder) GetVatRate(jsonFetcher JsonFetcher, requestedDate string) (foundVatRate int, err error) {
 
+	requestLogger.WithFields(log.Fields{
+		"date": requestedDate,
+	}).Debug("Finding vat rate")
 	foundVatRate = -1
 	parsedDate, err := time.Parse(shortForm, requestedDate+" 00:00:00")
 
