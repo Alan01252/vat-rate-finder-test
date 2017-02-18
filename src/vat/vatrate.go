@@ -2,9 +2,9 @@ package vat
 
 import (
 	"errors"
+	"logger"
 	"time"
 
-	"logger"
 	log "github.com/Sirupsen/logrus"
 )
 
@@ -14,12 +14,13 @@ func init() {
 	requestLogger = logger.GetLogger("VAT")
 }
 
+// lol http://fuckinggodateformat.com/
 const shortForm = "2006-01-02 15:04:05"
 
 type VatRateStruct []struct {
 	StartDate string `json:"startDate"`
 	EndDate   string `json:"endDate"`
-	VatRate struct {
+	VatRate   struct {
 		Standard int     `json:"standard"`
 		Reduced  float64 `json:"reduced"`
 	} `json:"vatRate"`

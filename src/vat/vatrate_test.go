@@ -41,11 +41,18 @@ func (jsonFetcher *MockJsonFetcher) GetJson() (foundVatList VatRateStruct, err e
 	return foundVatList, nil
 }
 
+type MockInvalidJsonFetcher struct {
+	url string
+}
 
-var _ = Describe("VAT", func() {
+func (jsonFetcher *MockInvalidJsonFetcher) GetJson() (foundVatList VatRateStruct, err error) {
+	json.Unmarshal([]byte("{invalid}"), &foundVatList)
+	return foundVatList, nil
+}
 
+var _ = Describe("VAT Rate Fetcher", func() {
 
-	It("Can return the VAT rate for a specific date", func() {
+	It("to return the VAT rate for a specific date", func() {
 
 		jsonFetcher := &MockJsonFetcher{}
 		v := VatRateFinder{}
@@ -70,6 +77,16 @@ var _ = Describe("VAT", func() {
 			}
 		}
 
+	})
+
+	It("to return an error when there's invalid json found", func() {
+		jsonFetcher := &MockInvalidJsonFetcher{}
+		v := VatRateFinder{}
+
+		foundVat, err := v.GetVatRate(jsonFetcher, "2017-01-1")
+
+		Expect(err).NotTo(Equal(nil))
+		Expect(foundVat).To(Equal(-1))
 	})
 
 })
