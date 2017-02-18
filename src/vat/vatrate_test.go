@@ -2,10 +2,10 @@ package vat
 
 import (
 	"encoding/json"
+	"testing"
 
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"testing"
 )
 
 const testJson = `[
@@ -60,7 +60,6 @@ var _ = Describe("VAT", func() {
 			{"2017-02-03", 30},
 			{"2017-03-02", -1},
 		}
-
 
 		for _, tt := range dateTests {
 			foundVat, _ := v.GetVatRate(jsonFetcher, tt.date)

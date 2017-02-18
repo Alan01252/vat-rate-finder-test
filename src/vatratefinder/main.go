@@ -4,26 +4,15 @@ import (
 	"fmt"
 	"os"
 	"vat"
+
 	log "github.com/Sirupsen/logrus"
-	"reflect"
+	"logger"
 )
 
 var requestLogger *log.Entry
 
-
 func init() {
-	// Log as JSON instead of the default ASCII formatter.
-	log.SetFormatter(&log.JSONFormatter{})
-
-	// Output to stdout instead of the default stderr
-	// Can be any io.Writer, see below for File example
-	log.SetOutput(os.Stdout)
-
-	// Only log the warning severity or above.
-	log.SetLevel(log.DebugLevel)
-	requestLogger = log.WithFields(log.Fields{"package": "main"})
-	fmt.Println(reflect.TypeOf(requestLogger))
-
+	requestLogger = logger.GetLogger("main")
 }
 
 func main() {

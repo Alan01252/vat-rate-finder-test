@@ -3,18 +3,15 @@ package vat
 import (
 	"errors"
 	"time"
+
+	"logger"
 	log "github.com/Sirupsen/logrus"
-	"os"
 )
 
 var requestLogger *log.Entry
 
 func init() {
-	log.SetFormatter(&log.JSONFormatter{})
-	log.SetOutput(os.Stdout)
-	log.SetLevel(log.DebugLevel)
-	requestLogger = log.WithFields(log.Fields{"package": "vat"})
-
+	requestLogger = logger.GetLogger("VAT")
 }
 
 const shortForm = "2006-01-02 15:04:05"
