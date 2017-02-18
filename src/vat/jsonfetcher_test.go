@@ -5,8 +5,6 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"fmt"
-
 	"reflect"
 
 	. "github.com/onsi/ginkgo"
@@ -45,8 +43,6 @@ var _ = Describe("JSON URL Fetcher", func() {
 			w.Write([]byte(urlJson))
 		}))
 		defer ts.Close()
-
-		fmt.Println(reflect.TypeOf(ts.URL))
 
 		jsonFetcher := NewUrlJsonFetcher(ts.URL)
 		aStruct, _ := jsonFetcher.GetJson()
