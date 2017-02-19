@@ -13,4 +13,7 @@ dependencies:
 test:
   override:
     - go test -v vat
+  post:
+    - sudo mv ./cover.out $CIRCLE_ARTIFACTS/cover.out
+    - sudo mv ./vat/junit.xml $CIRCLE_ARTIFACTS/junit.xml
 
