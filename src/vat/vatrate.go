@@ -56,11 +56,12 @@ func findVatRateInJson(foundVatList VatRateStruct, parsedDate time.Time) (foundV
 
 func (vatRateFinder *VatRateFinder) GetVatRate(jsonFetcher JsonFetcher, requestedDate string) (foundVatRate int, err error) {
 
+	foundVatRate = -1
+	parsedDate, err := time.Parse(shortForm, requestedDate+" 00:00:00")
+
 	requestLogger.WithFields(log.Fields{
 		"date": requestedDate,
 	}).Debug("Finding vat rate")
-	foundVatRate = -1
-	parsedDate, err := time.Parse(shortForm, requestedDate+" 00:00:00")
 
 	if err != nil {
 		return foundVatRate, err

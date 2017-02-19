@@ -51,7 +51,7 @@ var _ = Describe("JSON URL Fetcher", func() {
 
 	})
 
-	It("to return an error when returing invalid json", func() {
+	It("to return an error when given invalid json", func() {
 		ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			w.Write([]byte("{invalidjson}"))
 		}))
