@@ -15,5 +15,5 @@ test:
     - go test -v vat -cover
   post:
     - sudo mv ./cover.out $CIRCLE_ARTIFACTS/cover.out
-    - sudo mv ./vat/junit.xml $CIRCLE_ARTIFACTS/junit.xml
+    - sudo mv ./src/vat/junit.xml $CIRCLE_ARTIFACTS/junit.xml
 
