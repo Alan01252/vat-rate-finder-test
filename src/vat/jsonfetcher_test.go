@@ -1,10 +1,10 @@
 package vat
 
 import (
-	"net/http"
-	"net/http/httptest"
 	"testing"
 
+	"net/http"
+	"net/http/httptest"
 	"reflect"
 
 	. "github.com/onsi/ginkgo"
