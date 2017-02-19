@@ -1,0 +1,16 @@
+machine:
+
+ # Add some environment variables
+  environment:
+    GOPATH: /home/ubuntu/vat-rate-finder-test/
+
+## Customize dependencies
+dependencies:
+  pre:
+    - go get -t vat
+
+## Customize test commands
+test:
+  override:
+    - go test -v vat
+
