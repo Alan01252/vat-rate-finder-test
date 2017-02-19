@@ -10,6 +10,7 @@ import (
 
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
+	"github.com/onsi/ginkgo/reporters"
 )
 
 const testJson = `[
@@ -33,7 +34,8 @@ const testJson = `[
 
 func TestVat(t *testing.T) {
 	RegisterFailHandler(Fail)
-	RunSpecs(t, "VAT Test Suite")
+	junitReporter := reporters.NewJUnitReporter("junit.xml")
+	RunSpecsWithDefaultAndCustomReporters(t, "Vat Suite", []Reporter{junitReporter})
 }
 
 type MockJsonFetcher struct {

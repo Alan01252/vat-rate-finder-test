@@ -9,6 +9,7 @@ import (
 
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
+	"github.com/onsi/ginkgo/reporters"
 )
 
 const urlJson = `[
@@ -32,7 +33,8 @@ const urlJson = `[
 
 func TestJsonFetcher(t *testing.T) {
 	RegisterFailHandler(Fail)
-	RunSpecs(t, "VAT Test Suite")
+	junitReporter := reporters.NewJUnitReporter("junit.xml")
+	RunSpecsWithDefaultAndCustomReporters(t, "Vat Suite", []Reporter{junitReporter})
 }
 
 var _ = Describe("JSON URL Fetcher", func() {
