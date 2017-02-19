@@ -4,10 +4,8 @@ import (
 	"encoding/json"
 	"testing"
 
-	"fmt"
-
 	"errors"
-
+	"fmt"
 	"reflect"
 
 	. "github.com/onsi/ginkgo"
