@@ -14,6 +14,8 @@ test:
   override:
     - go test -v vat -coverprofile=cover.out
   post:
+    - go tool cover -html=cover.out -o cover.html
     - sudo mv ./cover.out $CIRCLE_ARTIFACTS/cover.out
+    - sudo mv ./cover.html $CIRCLE_ARTIFACTS/cover.html
     - sudo mv ./src/vat/junit.xml $CIRCLE_TEST_REPORTS/junit.xml
 

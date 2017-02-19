@@ -4,3 +4,4 @@ src/gopkg.in
 pkg/
 junit.xml
 cover.out
+cover.html
