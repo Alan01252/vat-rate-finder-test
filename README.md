@@ -8,4 +8,4 @@ A quick experimental program to get used to the golang language.
 
 # Coverage 
 
-[latest coverage](https://circleci.com/api/v1/project/Alan01252/vat-rate-finder-test/latest/artifacts/0/$CIRCLE_ARTIFACTS/cover.html)
+[View latest coverage report](https://circleci.com/api/v1/project/Alan01252/vat-rate-finder-test/latest/artifacts/0/$CIRCLE_ARTIFACTS/cover.html)
