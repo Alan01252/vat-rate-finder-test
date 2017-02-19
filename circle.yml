@@ -12,7 +12,7 @@ dependencies:
 ## Customize test commands
 test:
   override:
-    - go test -v vat
+    - go test -v vat -cover
   post:
     - sudo mv ./cover.out $CIRCLE_ARTIFACTS/cover.out
     - sudo mv ./vat/junit.xml $CIRCLE_ARTIFACTS/junit.xml
